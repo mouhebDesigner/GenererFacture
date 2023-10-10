@@ -219,7 +219,7 @@
 
         // Pour chaque tâche, calculez le sous-total
         $('.quantite-input').each(function(index) {
-            
+
             var quantite = parseFloat($(this).closest('tr').find('.quantite-input').val()) || 0;
             var prixUnitaire = parseFloat($(this).closest('tr').find('.prix-unitaire-input').val()) || 0;
             var sousTotal = quantite * prixUnitaire;
@@ -252,7 +252,13 @@
     function calculateTotalTTC() {
         var sousTotal = parseFloat(document.getElementById('sous_total').value) || 0;
         var tauxTVA = parseFloat(document.getElementById('taux_tva').value) || 0;
-        var totalTTC = sousTotal + (sousTotal * (tauxTVA / 100));
+        var remise = parseFloat(document.getElementById('remise').value) || 0;
+
+        // Calculer le montant total TTC en soustrayant la remise du sous-total
+        var totalTTC = sousTotal - remise;
+        
+        // Ajouter la TVA au montant total
+        totalTTC += (totalTTC * (tauxTVA / 100));
 
         document.getElementById('total_ttc').value = totalTTC.toFixed(2);
     }
