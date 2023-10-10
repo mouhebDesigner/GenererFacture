@@ -218,15 +218,11 @@
         var total = 0;
 
         // Pour chaque tâche, calculez le sous-total
-        $('.quantite-input, .prix-unitaire-input').each(function(index) {
+        $('.quantite-input').each(function(index) {
+            
             var quantite = parseFloat($(this).closest('tr').find('.quantite-input').val()) || 0;
-            console.log(quantite);
             var prixUnitaire = parseFloat($(this).closest('tr').find('.prix-unitaire-input').val()) || 0;
-            console.log("Prix-Unitaire:* " +prixUnitaire);
             var sousTotal = quantite * prixUnitaire;
-            console.log(sousTotal);
-            console.log("Sous-Total:* " + sousTotal);
-            console.log("Total:* " + total);
 
             total += sousTotal;
         });
@@ -244,6 +240,22 @@
     $(document).ready(function() {
         updateSousTotal();
     });
+
+    document.getElementById('taux_tva').addEventListener('input', function() {
+        calculateTotalTTC();
+    });
+
+    document.addEventListener('input', function() {
+        calculateTotalTTC();
+    });
+
+    function calculateTotalTTC() {
+        var sousTotal = parseFloat(document.getElementById('sous_total').value) || 0;
+        var tauxTVA = parseFloat(document.getElementById('taux_tva').value) || 0;
+        var totalTTC = sousTotal + (sousTotal * (tauxTVA / 100));
+
+        document.getElementById('total_ttc').value = totalTTC.toFixed(2);
+    }
 
 
 
