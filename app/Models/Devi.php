@@ -9,7 +9,7 @@ class Devi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ref' , 'user_id'];
+    protected $fillable = ['ref' , 'user_id', "sous_total","total_ttc","remise","taux_tva","is_invoiced"];
     public function services(){
         return $this->belongsToMany(Service::class, 'devi_service', 'devi_id', 'service_id');
     }

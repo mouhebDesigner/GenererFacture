@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Service::factory(4)->create();
         \App\Models\Devi::factory(2)->create();
         \App\Models\Facture::factory(4)->create();
-        \App\Models\Tache::factory(20)->create();
+        // \App\Models\Tache::factory(20)->create();
 
         DB::table('devi_service')->insert([
             [

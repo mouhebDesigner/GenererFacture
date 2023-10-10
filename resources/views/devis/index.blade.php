@@ -52,6 +52,7 @@
                                     <th>{{ __('Référence du devis') }}</th>
                                     <th>{{ __('Client') }}</th>
                                     <th>{{ __('Services') }}</th>
+                                    <th>{{ __('Est facturé') }}</th>
                                     <th>{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -66,6 +67,13 @@
                                                     <li>{{ $service->title }}</li>
                                                 @endforeach
                                             </ul>
+                                        </td>
+                                        <td>
+                                            @if ($devi->is_invoiced)
+                                                Oui
+                                            @else
+                                                Non
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="d-flex" style="gap: 10px">

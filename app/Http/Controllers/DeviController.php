@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Devi;
+use App\Models\Facture;
 use App\Models\Service;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
 
 class DeviController extends Controller
 {
@@ -38,6 +39,10 @@ class DeviController extends Controller
         $devi = Devi::create([
             'ref' => $ref,
             'user_id' => $request->user_id,
+            "sous_total" => $request->sous_total,
+            "total_ttc" => $request->total_ttc,
+            "remise" => $request->remise,
+            "taux_tva" => $request->taux_tva
         ]);
         // Attach the selected services to the Devi
         $services = Service::where('user_id', $request->user_id)->whereNull('status')->get();
@@ -88,9 +93,27 @@ class DeviController extends Controller
 
     public function destroy(Devi $devi)
     {
+        // Check if the Devi is associated with a Facture
+        if ($devi->is_invoiced) {
+            // Get the associated Facture
+            $facture = Facture::where('devi_id', $devi->id)->first();
+
+            if ($facture) {
+                // Delete the associated Facture
+                $facture->delete();
+            }
+        }
         $devi->delete();
 
         return response()->json(['isConfirmed' => 'Devi supprimé avec succée']);
 
+    }
+
+    public function exportPDF($id)
+    {
+        $devi = Devi::findOrFail($id);
+        $pdf = PDF::loadView('devis.pdf', ['devi' => $devi]);
+
+        return $pdf->download('devis.pdf');
     }
 }

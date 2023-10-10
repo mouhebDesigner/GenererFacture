@@ -45,7 +45,6 @@
                   <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Login</button>
                   
                 </div>
-                {{-- <a href="{{ url('/auth/register') }}" class="d-block mt-3 text-muted">Not a user? Sign up</a> --}}
               </form>
             </div>
           </div>

@@ -16,10 +16,6 @@ class FactureFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => function () {
-                // Vous pouvez utiliser la relation Many-to-One avec User ici pour générer un utilisateur associé.
-                return \App\Models\User::inRandomOrder()->first();
-            },
             'devi_id' => function () {
                 // Vous pouvez utiliser la relation One-to-One avec Devi ici pour générer un devis associé.
                 return \App\Models\Devi::inRandomOrder()->first();

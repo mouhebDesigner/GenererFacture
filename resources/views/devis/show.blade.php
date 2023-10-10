@@ -24,35 +24,19 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <h6 class="card-title">{{ __('Détails du devis') }}</h6>
-                    </div>
+                        <!-- Ajoutez un bouton pour exporter en PDF -->
+                        <div class="mb-3">
+                            <a href="{{ route('devis.pdf', ['id' => $devi->id]) }}" class="btn btn-primary">Exporter en PDF</a>
+                            @if (!$devi->is_invoiced) <!-- Check if the devi is not already invoiced -->
+                                <a href="{{ route('factures.create', ['devis_id' => $devi->id]) }}" class="btn btn-success">Transformez en facture</a>
+                            @endif
+                        </div>
 
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th>{{ __('Référence du devis') }}</th>
-                                <td>{{ $devi->ref }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Client') }}</th>
-                                <td>{{ $devi->user->nom }} {{ $devi->user->prenom }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Services') }}</th>
-                                <td>
-                                    <ul>
-                                        @foreach ($devi->services as $service)
-                                            <li>{{ $service->title }}</li>
-                                        @endforeach
-                                    </ul>
-                                </td>
-                            </tr>
-                            <!-- Add more rows as needed -->
-                        </tbody>
-                    </table>
+                    </div>
 
                     <!-- Display Tache data in a table -->
                     <h6 class="card-title">{{ __('Taches du devis') }}</h6>
-                    @foreach($devi->services as $service)
+                    @foreach($devi->user->services()->whereNull('status')->get() as $service)
                         <table class="table">
                             <thead>
                                 <tr>
@@ -91,6 +75,37 @@
                             </tbody>
                         </table>
                     @endforeach
+
+                    <!-- Additional Information (sous_total, total_ttc, remise, taux_tva) -->
+                    <h6 class="card-title">{{ __('Informations supplémentaires') }}</h6>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>{{ __('Référence du devis') }}</th>
+                                <td>{{ $devi->ref }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Client') }}</th>
+                                <td>{{ $devi->user->nom }} {{ $devi->user->prenom }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Sous-total') }}</th>
+                                <td>{{ $devi->sous_total }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Total TTC') }}</th>
+                                <td>{{ $devi->total_ttc }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Remise') }}</th>
+                                <td>{{ $devi->remise }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Taux TVA') }}</th>
+                                <td>{{ $devi->taux_tva }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

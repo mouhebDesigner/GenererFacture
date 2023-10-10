@@ -20,6 +20,7 @@ class CreateDevisTable extends Migration
             $table->decimal('total_ttc', 10, 2)->default(0)->nullable();
             $table->decimal('remise', 10, 2)->default(0)->nullable();
             $table->decimal('taux_tva', 5, 2)->default(0)->nullable(); 
+            $table->boolean('is_invoiced')->default(0)->nullable(); 
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps(); // Champs pour la date de création et la date de mise à jour
         });

@@ -5,10 +5,7 @@
   <div class="navbar-content">
     <form class="search-form">
       <div class="input-group">
-        <div class="input-group-text">
-          <i data-feather="search"></i>
-        </div>
-        <input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
+       
       </div>
     </form>
     <ul class="navbar-nav">
@@ -31,12 +28,7 @@
             </div>
           </div>
           <ul class="list-unstyled p-1">
-            <li class="dropdown-item py-2">
-              <a href="{{ route('profile.index') }}" class="text-body ms-0">
-                <i class="me-2 icon-md" data-feather="user"></i>
-                <span>Profile</span>
-              </a>
-            </li>
+           
             
         
             <li class="dropdown-item py-2">

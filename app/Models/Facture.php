@@ -9,7 +9,9 @@ class Facture extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['ref', 'devi_id'];
+
     public function devi(){
-        return $this->belongsToOne(Facture::class);
+        return $this->belongsTo(Devi::class);
     }
 }

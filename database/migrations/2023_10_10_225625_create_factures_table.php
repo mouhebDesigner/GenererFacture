@@ -16,8 +16,7 @@ class CreateFacturesTable extends Migration
         Schema::create('factures', function (Blueprint $table) {
             $table->id(); // Clé primaire auto-incrémentée
             $table->string('ref')->unique(); // Numéro de facture unique
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('devi_id')->nullable()->constrained('services')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('devi_id')->nullable()->constrained('devis')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps(); // Champs pour la date de création et la date de mise à jour
         });
         

@@ -67,24 +67,12 @@
         </div>
     </li>
     <li class="nav-item @if(Request::is('factures*')) active @endif">
-        <a class="nav-link" data-bs-toggle="collapse" href="#factures" role="button"
+        <a class="nav-link"  href="{{ route('factures.index') }}" role="button"
             aria-expanded="@if(Request::is('factures*')) true @else false @endif" aria-controls="email">
             <i class="link-icon" data-feather="mail"></i>
             <span class="link-title">{{ __('Factures') }}</span>
-            <i class="link-arrow" data-feather="chevron-down"></i>
         </a>
-        <div class="collapse @if(Request::is('factures')) show @endif" id="factures">
-            <ul class="nav sub-menu">
-                <li class="nav-item">
-                    <a href="{{ route('factures.index') }}"
-                        class="nav-link @if(Request::is('factures')) active @endif">{{ __('List de facture') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('factures.create') }}"
-                        class="nav-link @if(Request::is('factures/create')) active @endif">{{ __('Ajouter facture') }}</a>
-                </li>
-            </ul>
-        </div>
+       
     </li>
     
    
