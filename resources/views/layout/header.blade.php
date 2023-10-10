@@ -37,7 +37,7 @@
               onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                 <i class="me-2 icon-md" data-feather="log-out"></i>
-                  {{ __('Log Out') }}
+                  {{ __('Se déconnecté') }}
               </a>
 
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
