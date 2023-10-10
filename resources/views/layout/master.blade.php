@@ -88,8 +88,19 @@
 
     <script>
       $(document).ready(function(){
+        $('#addBtn').prop('disabled', true);
 
-     
+        // Check form completion status on input change
+        $(document).on('input change', '#formInputs input, #formInputs select, #formInputs textarea', function() {
+            
+            var allInputsCompleted = $('#formInputs input, #formInputs select, #formInputs textarea').filter(function() {
+                return this.value === '' && $(this).data('required');
+            }).length === 0;
+           
+            // Enable or disable the "Update Service" button based on completion status
+            $('#addBtn').prop('disabled', !allInputsCompleted);
+            $('#updateBtn').prop('disabled', !allInputsCompleted);
+        });
       });
     </script>
 

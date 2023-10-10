@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
                 "devi_id" => 2,
                 "service_id" => 3
             ]
-            ]);
+        ]);
        
 
     }

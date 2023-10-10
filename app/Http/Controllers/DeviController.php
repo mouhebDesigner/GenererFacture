@@ -25,18 +25,8 @@ class DeviController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required',
-            'taches.description' => 'required|array',
-            'taches.description.*' => 'required|string',
-            'taches.quantite' => 'required|array',
-            'taches.quantite.*' => 'required|numeric',
-            'taches.prixUnitaire' => 'required|array',
-            'taches.prixUnitaire.*' => 'required|numeric',
-            'taches.prixHT' => 'required|array',
-            'taches.prixHT.*' => 'required|numeric',
-
-        ]);
+        // dd($request->all());
+        
 
         // Generate a unique "ref" using Str::uuid()
         $prefix = 'DEVI-';
@@ -54,14 +44,17 @@ class DeviController extends Controller
 
         $devi->services()->attach($services);
         // Create the tasks and associate them with the Devi
-        foreach ($request->taches['description'] as $key => $tacheData) {
-            
-            $devi->taches()->create([
-                'description' => $request->taches['description'][$key],
-                'quantite' => $request->taches['quantite'][$key],
-                'prixUnitaire' => $request->taches['prixUnitaire'][$key],
-                'prixHT' => $request->taches['prixHT'][$key],
-            ]);
+        foreach($services as $service){
+
+            foreach ($request->taches['description'][$service->id] as $key => $tacheData) {
+                $devi->taches()->create([
+                    'description' => $request->taches['description'][$service->id][$key],
+                    'quantite' => $request->taches['quantite'][$service->id][$key],
+                    'prixUnitaire' => $request->taches['prixUnitaire'][$service->id][$key],
+                    'prixHT' => $request->taches['prixHT'][$service->id][$key],
+                    'service_id' => $service->id
+                ]);
+            }
         }
 
         return redirect()->route('devis.index')

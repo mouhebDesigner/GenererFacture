@@ -24,7 +24,6 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <h6 class="card-title">{{ __('Détails du devis') }}</h6>
-                        <a href="{{ route('devis.edit', $devi) }}" class="btn btn-primary">{{ __('Modifier le devis') }}</a>
                     </div>
 
                     <table class="table">
@@ -53,26 +52,45 @@
 
                     <!-- Display Tache data in a table -->
                     <h6 class="card-title">{{ __('Taches du devis') }}</h6>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>{{ __('Description') }}</th>
-                                <th>{{ __('Quantité') }}</th>
-                                <th>{{ __('Prix unitaire') }}</th>
-                                <th>{{ __('Prix HT') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($devi->taches as $tache)
+                    @foreach($devi->services as $service)
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{ $tache->description }}</td>
-                                    <td>{{ $tache->quantite }}</td>
-                                    <td>{{ $tache->prixUnitaire }}</td>
-                                    <td>{{ $tache->prixHT }}</td>
+                                    <th>
+                                        Service
+                                    </th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{ $service->title }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('Description') }}</th>
+                                    <th>{{ __('Quantité') }}</th>
+                                    <th>{{ __('Prix unitaire') }}</th>
+                                    <th>{{ __('Prix HT') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($service->taches as $tache)
+                                    <tr>
+                                        <td>{{ $tache->description }}</td>
+                                        <td>{{ $tache->quantite }}</td>
+                                        <td>{{ $tache->prixUnitaire }}</td>
+                                        <td>{{ $tache->prixHT }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -63,6 +63,58 @@
                         <!-- Display the table of services for the selected client -->
                         <div id="services-table"></div>
 
+                        <table>
+                            <tr>
+                                <td style="width: 25%">
+                                    <div class="mb-3" style="width: 100%">
+                                        <label for="sous_total" class="form-label">{{ __('Sous-total') }}</label>
+                                        <input type="text" style="width: 100%" data-required="true" class="form-control @error('sous_total') is-invalid @enderror" id="sous_total" name="sous_total" placeholder="Sous-total" readonly>
+                                        @error('sous_total')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </td>
+                                <td style="width: 25%">
+                                    <div class="mb-3" style="width: 100%">
+                                        <label for="total_ttc" class="form-label">{{ __('Total TTC') }}</label>
+                                        <input type="text" style="width: 100%"  data-required="true" class="form-control @error('total_ttc') is-invalid @enderror" id="total_ttc" name="total_ttc" placeholder="Total TTC">
+                                        @error('total_ttc')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </td>
+                                <td style="width: 25%">
+                                    <div class="mb-3" style="width: 100%">
+                                        <label for="remise" class="form-label">{{ __('Remise') }}</label>
+                                        <input type="text" style="width: 100%"  data-required="true" class="form-control @error('remise') is-invalid @enderror" id="remise" name="remise" placeholder="Remise">
+                                        @error('remise')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </td>
+                                <td style="width: 25%">
+                                    <div class="mb-3" style="width: 100%">
+                                        <label for="taux_tva" class="form-label">{{ __('Taux TVA') }}</label>
+                                        <input type="text" style="width: 100%"  data-required="true" class="form-control @error('taux_tva') is-invalid @enderror" id="taux_tva" name="taux_tva" placeholder="Taux TVA">
+                                        @error('taux_tva')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+
                         <button type="submit" class="btn btn-primary" id="addBtn">{{ __('Ajouter') }}</button>
                         <a href="{{ route('devis.index') }}" class="btn btn-secondary">{{ __('Annuler') }}</a>
                     </form>
@@ -98,7 +150,7 @@
         var services = response.services;
 
         if (services.length === 0) {
-            return '<p>No services available for this client.</p>';
+            return '<p>Aucun service disponible pour ce client.</p>';
         }
 
         var tableHtml = '<form data-id="1"><table class="table">';
@@ -114,7 +166,7 @@
 
         services.forEach(function(service, index) {
 
-            tableHtml += `<tbody class="add-tache-form-body">`;
+            tableHtml += '<tbody class="add-tache-form-body" data-service-id="'+service.id+'">';
             tableHtml += '<tr>';
                 tableHtml += '<td colspan="4">' + service.title + '</td>';
             tableHtml += '</tr>';
@@ -129,10 +181,10 @@
            
             tableHtml += '<tr>';
                 // Add a form to add a "tache" for this service
-                tableHtml += '<td><input type="text" class="form-control" name="taches[description][]" placeholder="Description"></td>';
-                tableHtml += '<td><input type="text" class="form-control" name="taches[quantite][]" placeholder="Quantité"></td>';
-                tableHtml += '<td><input type="text" class="form-control" name="taches[prixUnitaire][]" placeholder="Prix Unitaire"></td>';
-                tableHtml += '<td><input type="text" class="form-control" name="taches[prixHT][]" placeholder="Prix HT"></td>';
+                tableHtml += '<td><input type="text" data-required="true" class="form-control" name="taches[description]['+service.id+'][]" placeholder="Description"></td>';
+                tableHtml += '<td><input type="text" data-required="true" class="form-control quantite-input" name="taches[quantite]['+service.id+'][]" placeholder="Quantité"></td>';
+                tableHtml += '<td><input type="text" data-required="true" class="form-control prix-unitaire-input" name="taches[prixUnitaire]['+service.id+'][]" placeholder="Prix Unitaire"></td>';
+                tableHtml += '<td><input type="text" data-required="true" class="form-control" name="taches[prixHT]['+service.id+'][]" placeholder="Prix HT"></td>';
                 
                 // Add a button to add a new "tache"
                 tableHtml += '<td><button type="button" class="add-tache-button">Add Tache</button></td>';
@@ -150,15 +202,47 @@
     // Event listener for "Add Tache" buttons
     $(document).on('click', '.add-tache-button', function() {
         var form = $(this).closest('tbody.add-tache-form-body');
+        var serviceId = form.data('service-id');
         
         var newRow = $('<tr>' +
-            '<td><input type="text" class="form-control" name="taches[description][]" placeholder="Description"></td>' +
-            '<td><input type="text" class="form-control" name="taches[quantite][]" placeholder="Quantité"></td>' +
-            '<td><input type="text" class="form-control" name="taches[prixUnitaire][]" placeholder="Prix Unitaire"></td>' +
-            '<td><input type="text" class="form-control" name="taches[prixHT][]" placeholder="Prix HT"></td>' +
+            '<td><input type="text" data-required="true" class="form-control" name="taches[description]['+serviceId+'][]" placeholder="Description"></td>' +
+            '<td><input type="text" data-required="true" class="form-control quantite-input" name="taches[quantite]['+serviceId+'][]" placeholder="Quantité"></td>' +
+            '<td><input type="text" data-required="true" class="form-control prix-unitaire-input" name="taches[prixUnitaire]['+serviceId+'][]" placeholder="Prix Unitaire"></td>' +
+            '<td><input type="text" data-required="true" class="form-control" name="taches[prixHT]['+serviceId+'][]" placeholder="Prix HT"></td>' +
             '</tr>');
 
         form.append(newRow);
+    });
+    // Fonction pour mettre à jour le sous-total
+    function updateSousTotal() {
+        var total = 0;
+
+        // Pour chaque tâche, calculez le sous-total
+        $('.quantite-input, .prix-unitaire-input').each(function(index) {
+            var quantite = parseFloat($(this).closest('tr').find('.quantite-input').val()) || 0;
+            console.log(quantite);
+            var prixUnitaire = parseFloat($(this).closest('tr').find('.prix-unitaire-input').val()) || 0;
+            console.log("Prix-Unitaire:* " +prixUnitaire);
+            var sousTotal = quantite * prixUnitaire;
+            console.log(sousTotal);
+            console.log("Sous-Total:* " + sousTotal);
+            console.log("Total:* " + total);
+
+            total += sousTotal;
+        });
+
+        // Mettez à jour l'input "Sous-total"
+        $('#sous_total').val(total.toFixed(2));
+    }
+
+    // Écoutez les changements dans les champs quantité et prix unitaire
+    $(document).on('change', '.quantite-input, .prix-unitaire-input', function() {
+        updateSousTotal();
+    });
+
+    // Au chargement de la page, mettez à jour le sous-total initial
+    $(document).ready(function() {
+        updateSousTotal();
     });
 
 
