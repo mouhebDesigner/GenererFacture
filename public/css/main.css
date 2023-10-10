@@ -1,0 +1,24 @@
+.main-wrapper .page-wrapper{
+    background-image: url('../assets/images/background_pattern.png') !important;
+}
+
+
+
+.strikethrough {
+    text-decoration: line-through;
+}
+  
+.add-btn, .btn-delete, .btn-edit{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.actions-list{
+    list-style: none;
+}
+.actions-list li label{
+    cursor: pointer;
+    margin-bottom: 5px;
+}
